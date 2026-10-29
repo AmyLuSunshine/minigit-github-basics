@@ -17,6 +17,13 @@ int main() {
         std::cerr << "path smoke check failed\n";
         return 1;
     }
+
+    const std::filesystem::path root = "course/repo";
+    if (!check(minigit::metadataDirectory(root) == root / ".minigit",
+        "metadataDirectory should append .minigit to the root path")) {
+        return 1;
+    }
+
     std::cout << "PathLab smoke check passed\n";
     return 0;
 }

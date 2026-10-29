@@ -1,6 +1,14 @@
 #include "PathLab.hpp"
 #include <iostream>
 
+bool check(bool condition, const char* message) {
+    if (!condition) {
+        std::cerr << "FAILED: " << message << '\n';
+        return false;
+    }
+    return true;
+}
+
 int main() {
     // Baseline smoke check: the project and CTest wiring work before students
     // begin the path Issues. Add focused assertions with each Issue.

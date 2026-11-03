@@ -1,5 +1,6 @@
 #pragma once
 #include <filesystem>
+#include <filesystem>
 
 namespace minigit{
     // Week 1 Issues will add small helpers for building paths below a repository root.

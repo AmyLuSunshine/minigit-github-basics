@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <system_error>
-#include <fatream>
+#include <fstream>
 
 namespace minigit {
     // Implement the focused behavior described by the active Issue.

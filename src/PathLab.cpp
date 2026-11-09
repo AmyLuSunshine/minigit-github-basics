@@ -2,7 +2,8 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
-
+#include <system_error>
+#include <fatream>
 
 namespace minigit {
     // Implement the focused behavior described by the active Issue.
@@ -14,20 +15,25 @@ namespace minigit {
         return metadataDirectory(root) / "HEAD";
     }
 
-    bool createparentdirectories(const std::filesystem::path &path) {
-        std::filesystem::path parent = path.parent_path();
-        // create missing parent directories when needed
-        if (!parent.empty() && !std::filesystem::exists(parent)) {
-            std::cout << "Creating missing parent directories for: " << parent << std::endl;
+    
+bool createparentdirectories(const std::filesystem::path& path) {
+    std::filesystem::path parent = path.parent_path();
 
-            return std::filesystem::create_directories(parent);
-        }
+    if (parent.empty()) {
         return true;
     }
-    bool writeTextFile(const std::filesystem::path& path, const std::string& text) {
-    if (!createparentdirectories(path)) {
+
+    std::error_code error;
+    std::filesystem::create_directories(parent, error);
+
+    if (error) {
+        std::cerr << "Failed to create directories: "
+                  << error.message() << '\n';
         return false;
     }
+
+    return std::filesystem::is_directory(parent, error) && !error;
+}
 
     std::ofstream file(path);
     if (!file.is_open()) {

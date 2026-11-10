@@ -34,7 +34,8 @@ bool createparentdirectories(const std::filesystem::path& path) {
 
     return std::filesystem::is_directory(parent, error) && !error;
 }
-
+bool writeTextFile(const std::filesystem::path& path,
+                    const std::string& text) {
     std::ofstream file(path);
     if (!file.is_open()) {
         return false;

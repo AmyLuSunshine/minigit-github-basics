@@ -1,8 +1,8 @@
 #include "PathLab.hpp"
-#include <iostream>
+#include <fstream>
+#include <iterator>
 
 namespace minigit {
-    // Implement the focused behavior described by the active Issue.
     std::filesystem::path metadataDirectory(const std::filesystem::path& root) {
         return root / ".minigit";
     }
@@ -11,4 +11,19 @@ namespace minigit {
         return metadataDirectory(root) / "HEAD";
     }
 
-}   // namespace minigit
+    bool readTextFile(const std::filesystem::path& path, std::string& text) {
+        std::ifstream file(path, std::ios::binary);
+        if (!file.is_open()) {
+            return false;
+        }
+
+        std::string contents((std::istreambuf_iterator<char>(file)),
+                             std::istreambuf_iterator<char>());
+        if (file.bad()) {
+            return false;
+        }
+
+        text = contents;
+        return true;
+    }
+}

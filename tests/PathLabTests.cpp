@@ -1,7 +1,7 @@
 #include "PathLab.hpp"
 #include <filesystem>
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include <string>
 
 bool check(bool condition, const char* message) {
@@ -50,5 +50,30 @@ int main() {
     if (!check(actual == "unchanged", "failed read leaves output unchanged")) return 1;
 
     std::cout << "All PathLab tests passed\n";
+
+    {
+        // Issue 3 test:
+        const std::filesystem::path testFile =
+        "build/issue3-test/nested/output.txt";
+
+        if (!check(minigit::writeTextFile(testFile, "Hello MiniGit"),
+           "writeTextFile should create parent directories and write text")) {
+            return 1;
+        }
+
+            std::ifstream input(testFile);
+            std::string contents;
+            std::getline(input, contents);
+
+        if (!check(contents == "Hello MiniGit",
+           "writeTextFile should save the exact text")) {
+            return 1;
+    }
+    input.close();
+    std::filesystem::remove_all("build/issue3-test");
+
+
+    std::cout << "PathLab smoke check passed\n";
+    }
     return 0;
 }

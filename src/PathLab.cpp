@@ -7,8 +7,7 @@
 
 namespace minigit {
     // Implement the focused behavior described by the active Issue.
-    std::filesystem::path adataDirectory(const std::filesystem::path& root) {
-        return root / ".minigit";
+std::filesystem::path metadataDirectory(const std::filesystem::path& root) {        return root / ".minigit";
     }
 
     std::filesystem::path getHead(const std::filesystem::path& root) {

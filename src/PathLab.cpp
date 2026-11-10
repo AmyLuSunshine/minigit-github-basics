@@ -36,11 +36,16 @@ bool createparentdirectories(const std::filesystem::path& path) {
 }
 bool writeTextFile(const std::filesystem::path& path,
                     const std::string& text) {
+    if (!createparentdirectories(path)) {
+        return false;
+    }
+
     std::ofstream file(path);
     if (!file.is_open()) {
         return false;
     }
-    file <<text;
+
+    file << text;
     return file.good();
 }
 }   // namespace minigit

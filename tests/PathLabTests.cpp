@@ -68,7 +68,7 @@ int main()
            "writeTextFile should save the exact text")) {
             return 1;
     }
-
+    input.close();
     std::filesystem::remove_all("build/issue3-test");
 
 
